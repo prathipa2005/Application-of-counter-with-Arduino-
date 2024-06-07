@@ -1,0 +1,34 @@
+const int inputPins[3] = {2, 3, 4};  // Pins connected to the counter circuit
+const int motorPin = 8;  // Pin connected to the motor
+
+// Variables
+int binaryCount = 0;  // Binary count read from input pins
+int decimalCount = 0; // Decimal count converted from binary count
+
+void setup() {
+  // Initialize input and output pins
+  for (int i = 0; i < 3; i++) {
+    pinMode(inputPins[i], INPUT);
+  }
+  pinMode(motorPin, OUTPUT);
+}
+
+void loop() {
+  // Read binary count from input pins
+  binaryCount = 0;
+  for (int i = 0; i < 3; i++) {
+    binaryCount |= digitalRead(inputPins[i]) << i;
+  }
+
+  // Convert binary count to decimal
+  decimalCount = binaryCount;
+
+  // Check if count is equal to 5
+  if (decimalCount == 5) {
+    // Trigger motor output
+    digitalWrite(motorPin, HIGH);
+    delay(2000);  // Motor on for 100 milliseconds
+    digitalWrite(motorPin, LOW);
+    delay(2000); // Wait for 5 seconds
+  }
+}
